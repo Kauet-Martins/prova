@@ -112,6 +112,16 @@
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
+
+    video {
+      display: block;
+      margin: 20px auto;
+      width: 100%;
+      max-width: 640px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
   </style>
 </head>
 <body>
@@ -242,11 +252,14 @@
     <p>Nota: <span id="nota">0</span> / 10</p>
   </div>
 
-  <!-- CRONOMETRO -->
-  <div id="cronometro" style="display:none;">
-    <p>Redação começará em:</p>
-    <div id="timer">20</div>
+  <!-- VÍDEO ANTES DA REDAÇÃO -->
+  <div id="video-intro" style="display:none;">
+    <video id="videoRedacao" width="640" height="360" controls autoplay>
+      <source src="midia/Video.mp4" type="video/mp4">
+      Seu navegador não suporta vídeo HTML5.
+  </video>
   </div>
+
 
   <!-- REDAÇÃO -->
   <div id="redacao-container" style="display:none;">
@@ -338,21 +351,20 @@
     iniciarCronometro(20);
   });
 
-  function iniciarCronometro(segundos) {
-    let tempo = segundos;
-    cronometroDiv.style.display = "block";
-    timerDisplay.textContent = tempo;
+  function iniciarCronometro() {
+  const videoDiv = document.getElementById("video-intro");
+  const video = document.getElementById("videoRedacao");
 
-    const interval = setInterval(() => {
-      tempo--;
-      timerDisplay.textContent = tempo;
-      if (tempo <= 0) {
-        clearInterval(interval);
-        cronometroDiv.style.display = "none";
-        mostrarRedacao();
-      }
-    }, 1000);
-  }
+  videoDiv.style.display = "block";
+  video.currentTime = 0;
+  video.play();
+
+  video.onended = () => {
+    videoDiv.style.display = "none";
+    mostrarRedacao();
+  };
+}
+
 
   function mostrarRedacao() {
     redacaoContainer.style.display = "block";
