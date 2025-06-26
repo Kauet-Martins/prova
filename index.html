@@ -127,7 +127,7 @@
   </header>
 
   <!-- Áudio de fundo, id para controle via JS -->
-  <audio id="audioFundo" src="midia/Audio1.mp3" autoplay loop></audio>
+  <audio id="audioFundo" src="midia/Audio1.mp3" autoplay controls loop></audio>
 
   <!-- FORMULÁRIO DA PROVA -->
   <form id="prova">
@@ -294,7 +294,7 @@
       const algumaMarcada = Array.from(radios).some(radio => radio.checked);
       if (!algumaMarcada) {
         alert(`Por favor, responda à pergunta ${i} antes de continuar.`);
-        return;
+        return; // Interrompe sem corrigir
       }
     }
 
@@ -334,13 +334,6 @@
     notaSpan.textContent = nota;
     resultadoDiv.style.display = "block";
     form.style.display = "none";
-
-    // Trocar o áudio após envio da prova
-    const audio = document.getElementById("audio-fundo");
-    audio.pause();
-    audio.src = "midia/Audio2.mp3"; // Caminho do novo áudio
-    audio.load();
-    audio.play();
 
     iniciarCronometro(20);
   });
